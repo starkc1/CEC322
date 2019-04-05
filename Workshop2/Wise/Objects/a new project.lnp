@@ -1,0 +1,9 @@
+--cpu=Cortex-M4.fp
+".\objects\workshop2_main_prob.o"
+".\objects\retarget_io.o"
+".\objects\startup_armcm4.o"
+".\objects\system_armcm4.o"
+--strict --scatter ".\Objects\a new project.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\a new project.map" -o ".\Objects\a new project.axf"

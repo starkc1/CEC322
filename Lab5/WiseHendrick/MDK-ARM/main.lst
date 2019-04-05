@@ -1,0 +1,85 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             main, CODE, READONLY
+    2 00000000                 EXPORT           read_a_bit_of_a_port
+    3 00000000                 EXPORT           set_a_bit_of_a_port
+    4 00000000                 EXPORT           clear_a_bit_of_a_port
+    5 00000000         
+    6 00000000                 ALIGN
+    7 00000000         
+    8 00000000         read_a_bit_of_a_port
+                               PROC
+    9 00000000 6802            LDR              r2, [r0]
+   10 00000002 EA02 0201       AND              r2, r1
+   11 00000006 4610            MOV              r0, r2
+   12 00000008 4770            BX               lr
+   13 0000000A                 ENDP
+   14 0000000A         
+   15 0000000A         
+   16 0000000A         set_a_bit_of_a_port
+                               PROC
+   17 0000000A 6802            LDR              r2, [r0]
+   18 0000000C EA42 0201       ORR              r2, r1
+   19 00000010 6002            STR              r2, [r0]
+   20 00000012 4770            BX               lr
+   21 00000014                 ENDP
+   22 00000014         
+   23 00000014         clear_a_bit_of_a_port
+                               PROC
+   24 00000014 6802            LDR              r2, [r0]
+   25 00000016 EA42 0201       ORR              r2, r1
+   26 0000001A 6002            STR              r2, [r0]
+   27 0000001C 4770            BX               lr
+   28 0000001E                 ENDP
+   29 0000001E         
+   30 0000001E                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend="lab 3\main.d" -o"lab 3\main.o" -I.\RTE\_Lab_3 -IC:\Keil_v5\ARM
+\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32L4xx_D
+FP\2.2.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include --predefine="__EVAL SETA 1" 
+--predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 527" --pred
+efine="_RTE_ SETA 1" --predefine="STM32L476xx SETA 1" --list=main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+clear_a_bit_of_a_port 00000014
+
+Symbol: clear_a_bit_of_a_port
+   Definitions
+      At line 23 in file main.s
+   Uses
+      At line 4 in file main.s
+Comment: clear_a_bit_of_a_port used once
+main 00000000
+
+Symbol: main
+   Definitions
+      At line 1 in file main.s
+   Uses
+      None
+Comment: main unused
+read_a_bit_of_a_port 00000000
+
+Symbol: read_a_bit_of_a_port
+   Definitions
+      At line 8 in file main.s
+   Uses
+      At line 2 in file main.s
+Comment: read_a_bit_of_a_port used once
+set_a_bit_of_a_port 0000000A
+
+Symbol: set_a_bit_of_a_port
+   Definitions
+      At line 16 in file main.s
+   Uses
+      At line 3 in file main.s
+Comment: set_a_bit_of_a_port used once
+4 symbols
+340 symbols in table

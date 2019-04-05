@@ -1,0 +1,253 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             my_fancy_asm_code, CODE, READON
+LY
+    2 00000000         
+    3 00000000                 EXPORT           aTask1
+    4 00000000                 EXPORT           aTask2
+    5 00000000                 EXPORT           aTask3
+    6 00000000                 EXPORT           aTask4
+    7 00000000         
+    8 00000000                 ALIGN
+    9 00000000         
+   10 00000000         
+   11 00000000         ; For loop: Find the index of the min number in an array
+                        arr of size n
+   12 00000000         ; uint32_t aTask1(int32_t *arr, int32_t n);
+   13 00000000         aTask1  PROC
+   14 00000000 B530            PUSH             {r4, r5, lr}
+   15 00000002         ;uint32_t minLoc = 0;
+   16 00000002         ;int32_t minValue = arr[0];
+   17 00000002         ;for(int i = 0; i < n; i++) {
+   18 00000002         ; if( *(arr + i) < minValue) {
+   19 00000002         ;  minLoc = i;
+   20 00000002         ;  minValue = *(arr + i);
+   21 00000002         ; }
+   22 00000002         ;}
+   23 00000002         ;
+   24 00000002         
+   25 00000002 F04F 0200       MOV              r2, #0      ;minLocation
+   26 00000006 F850 3B04       LDR              r3, [r0], #4 ;minValue
+   27 0000000A F04F 0401       MOV              r4, #1      ;i
+   28 0000000E         aTask1_loop
+   29 0000000E 42A1            CMP              r1, r4
+   30 00000010 DB08            BLT              aTask1_endLoop
+   31 00000012         
+   32 00000012 F850 5B04       LDR              r5, [r0], #4
+   33 00000016         
+   34 00000016 429D            CMP              r5, r3
+   35 00000018 DA01            BGE              aTask1_endIf
+   36 0000001A 4622            MOV              r2, r4
+   37 0000001C 462B            MOV              r3, r5
+   38 0000001E         aTask1_endIf
+   39 0000001E F104 0401       ADD              r4, #1
+   40 00000022 E7F4            B                aTask1_loop
+   41 00000024         aTask1_endLoop
+   42 00000024 4610            MOV              r0, r2
+   43 00000026 BD30            POP              {r4, r5, pc}
+   44 00000028                 ENDP
+   45 00000028         
+   46 00000028         ; While loop: Determine the number of binary 1's using t
+                       he parity-checking alg
+   47 00000028         ; uint32_t aTask4(uint32_t num);
+   48 00000028         aTask2  PROC
+   49 00000028 EA4F 71D0       MOV              r1, r0, LSR #31
+   50 0000002C B118    aTask2_loop
+                               CBZ              r0, aTask2_end
+   51 0000002E 0080            MOVS             r0, r0, LSL #2
+   52 00000030 EB41 71D0       ADC              r1, r0, LSR #31
+   53 00000034 E7FA            B                aTask2_loop
+   54 00000036 4608    aTask2_end
+                               MOV              r0, r1
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   55 00000038 4770            BX               LR
+   56 0000003A                 ENDP
+   57 0000003A         
+   58 0000003A         ; Do-while loop: Count the number of binary 1's using a 
+                       simplified approach
+   59 0000003A         ; uint32_t aTask3(uint32_t x);
+   60 0000003A         aTask3  PROC
+   61 0000003A         ;do {
+   62 0000003A         ;  count += (num >> i) & 0x1;
+   63 0000003A         ;  i++
+   64 0000003A         ;}
+   65 0000003A         ;while(i < 32);
+   66 0000003A F04F 0100       MOV              r1, #0
+   67 0000003E F04F 0200       MOV              r2, #0
+   68 00000042 2A20    task3_loop
+                               CMP              r2, #32
+   69 00000044 DA05            BGE              task3_endLoop
+   70 00000046         
+   71 00000046 0040            LSLS             r0, #1
+   72 00000048 F141 0100       ADC              r1, #0
+   73 0000004C         
+   74 0000004C         
+   75 0000004C F102 0201       ADD              r2, #1
+   76 00000050 E7F7            B                task3_loop
+   77 00000052         task3_endLoop
+   78 00000052 4608            MOV              r0, r1
+   79 00000054 4770            BX               LR
+   80 00000056                 ENDP
+   81 00000056         
+   82 00000056         ; Count the number of deimal digits of an uint32_t numbe
+                       r
+   83 00000056         ; uint32_t aTask4(uint32_t n, uint32_t b);
+   84 00000056         aTask4  PROC
+   85 00000056         
+   86 00000056 F04F 0201       MOV              r2, #1      ;
+   87 0000005A 460B            MOV              r3, r1      ;
+   88 0000005C 4298    task4_loop
+                               CMP              r0, r3
+   89 0000005E DB04            BLT              task4_end
+   90 00000060 FB03 F301       MUL              r3, r1      ;
+   91 00000064 F102 0201       ADD              r2, #1      ;
+   92 00000068 E7F8            B                task4_loop
+   93 0000006A         task4_end
+   94 0000006A 4610            MOV              r0, r2
+   95 0000006C 4770            BX               lr
+   96 0000006E                 ENDP
+   97 0000006E         
+   98 0000006E         
+   99 0000006E                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\lab08_asm_functions_prob.d -o.\objects\lab08_asm_func
+tions_prob.o -I.\RTE\_Target_1 -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core
+\Include -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\Device\ARM\ARMCM4\Include --pred
+efine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 526" --predefine="_RT
+E_ SETA 1" --predefine="ARMCM4_FP SETA 1" --list=.\listings\lab08_asm_functions
+_prob.lst lab08_asm_functions_prob.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+aTask1 00000000
+
+Symbol: aTask1
+   Definitions
+      At line 13 in file lab08_asm_functions_prob.s
+   Uses
+      At line 3 in file lab08_asm_functions_prob.s
+Comment: aTask1 used once
+aTask1_endIf 0000001E
+
+Symbol: aTask1_endIf
+   Definitions
+      At line 38 in file lab08_asm_functions_prob.s
+   Uses
+      At line 35 in file lab08_asm_functions_prob.s
+Comment: aTask1_endIf used once
+aTask1_endLoop 00000024
+
+Symbol: aTask1_endLoop
+   Definitions
+      At line 41 in file lab08_asm_functions_prob.s
+   Uses
+      At line 30 in file lab08_asm_functions_prob.s
+Comment: aTask1_endLoop used once
+aTask1_loop 0000000E
+
+Symbol: aTask1_loop
+   Definitions
+      At line 28 in file lab08_asm_functions_prob.s
+   Uses
+      At line 40 in file lab08_asm_functions_prob.s
+Comment: aTask1_loop used once
+aTask2 00000028
+
+Symbol: aTask2
+   Definitions
+      At line 48 in file lab08_asm_functions_prob.s
+   Uses
+      At line 4 in file lab08_asm_functions_prob.s
+Comment: aTask2 used once
+aTask2_end 00000036
+
+Symbol: aTask2_end
+   Definitions
+      At line 54 in file lab08_asm_functions_prob.s
+   Uses
+      At line 50 in file lab08_asm_functions_prob.s
+Comment: aTask2_end used once
+aTask2_loop 0000002C
+
+Symbol: aTask2_loop
+   Definitions
+      At line 50 in file lab08_asm_functions_prob.s
+   Uses
+      At line 53 in file lab08_asm_functions_prob.s
+Comment: aTask2_loop used once
+aTask3 0000003A
+
+Symbol: aTask3
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+   Definitions
+      At line 60 in file lab08_asm_functions_prob.s
+   Uses
+      At line 5 in file lab08_asm_functions_prob.s
+Comment: aTask3 used once
+aTask4 00000056
+
+Symbol: aTask4
+   Definitions
+      At line 84 in file lab08_asm_functions_prob.s
+   Uses
+      At line 6 in file lab08_asm_functions_prob.s
+Comment: aTask4 used once
+my_fancy_asm_code 00000000
+
+Symbol: my_fancy_asm_code
+   Definitions
+      At line 1 in file lab08_asm_functions_prob.s
+   Uses
+      None
+Comment: my_fancy_asm_code unused
+task3_endLoop 00000052
+
+Symbol: task3_endLoop
+   Definitions
+      At line 77 in file lab08_asm_functions_prob.s
+   Uses
+      At line 69 in file lab08_asm_functions_prob.s
+Comment: task3_endLoop used once
+task3_loop 00000042
+
+Symbol: task3_loop
+   Definitions
+      At line 68 in file lab08_asm_functions_prob.s
+   Uses
+      At line 76 in file lab08_asm_functions_prob.s
+Comment: task3_loop used once
+task4_end 0000006A
+
+Symbol: task4_end
+   Definitions
+      At line 93 in file lab08_asm_functions_prob.s
+   Uses
+      At line 89 in file lab08_asm_functions_prob.s
+Comment: task4_end used once
+task4_loop 0000005C
+
+Symbol: task4_loop
+   Definitions
+      At line 88 in file lab08_asm_functions_prob.s
+   Uses
+      At line 92 in file lab08_asm_functions_prob.s
+Comment: task4_loop used once
+14 symbols
+349 symbols in table
