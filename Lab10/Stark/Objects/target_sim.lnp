@@ -1,0 +1,11 @@
+--cpu=Cortex-M4.fp
+".\objects\lab10_main_prob.o"
+".\objects\lab10_c_functions.o"
+".\objects\lab10_asm_functions_prob.o"
+".\objects\retarget_io.o"
+".\objects\startup_armcm4.o"
+".\objects\system_armcm4.o"
+--strict --scatter ".\Objects\target_sim.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\target_sim.map" -o .\Objects\target_sim.axf

@@ -1,0 +1,1 @@
+lab02_joystick_and_leds_with_cubemx\startup_stm32l476xx.o: startup_stm32l476xx.s

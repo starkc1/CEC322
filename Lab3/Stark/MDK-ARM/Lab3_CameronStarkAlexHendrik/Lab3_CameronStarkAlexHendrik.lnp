@@ -1,0 +1,28 @@
+--cpu=Cortex-M4.fp --branchpatch=sdcomp-29491-629360
+"lab3_cameronstarkalexhendrik\startup_stm32l476xx.o"
+"lab3_cameronstarkalexhendrik\main.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_it.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_msp.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_tim.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_tim_ex.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_uart.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_uart_ex.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_i2c.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_i2c_ex.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_rcc.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_rcc_ex.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_flash.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_flash_ex.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_flash_ramfunc.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_gpio.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_dma.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_dma_ex.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_pwr.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_pwr_ex.o"
+"lab3_cameronstarkalexhendrik\stm32l4xx_hal_cortex.o"
+"lab3_cameronstarkalexhendrik\system_stm32l4xx.o"
+--library_type=microlib --strict --scatter "Lab3_CameronStarkAlexHendrik\Lab3_CameronStarkAlexHendrik.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Lab3_CameronStarkAlexHendrik.map" -o Lab3_CameronStarkAlexHendrik\Lab3_CameronStarkAlexHendrik.axf

@@ -1,0 +1,95 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             asm, CODE, READONLY ;
+    2 00000000                 EXPORT           read_a_bit_of_a_port
+    3 00000000                 EXPORT           set_a_bit_of_a_port
+    4 00000000                 EXPORT           clear_a_bit_of_a_port
+    5 00000000         
+    6 00000000                 ALIGN
+    7 00000000         
+    8 00000000         
+    9 00000000         ;extern uint32_t read_a_bit_of_a_port(__IO uint32_t *pID
+                       R, uint32_t pinMask)
+   10 00000000         read_a_bit_of_a_port
+                               PROC
+   11 00000000 6802            LDR              r2, [r0]    ;
+   12 00000002 EA01 0002       AND              r0, r1, r2  ;
+   13 00000006 4770            BX               lr          ;
+   14 00000008                 ENDP
+   15 00000008         
+   16 00000008         
+   17 00000008         
+   18 00000008         
+   19 00000008         
+   20 00000008         ;extern void set_a_bit_of_a_port(__IO uint32_t *pODR, ui
+                       nt32_t pinMask)
+   21 00000008         set_a_bit_of_a_port
+                               PROC
+   22 00000008 6802            LDR              r2, [r0]    ;
+   23 0000000A EA42 0201       ORR              r2, r1      ;
+   24 0000000E 6002            STR              r2, [r0]    ;
+   25 00000010 4770            BX               lr          ;
+   26 00000012                 ENDP
+   27 00000012         
+   28 00000012         ;extern void clear_a_bit_of_a_port(__IO uint32_t *pODR, 
+                       uint32_t pinMask)
+   29 00000012         clear_a_bit_of_a_port
+                               PROC
+   30 00000012 6802            LDR              r2, [r0]    ;
+   31 00000014 EA22 0201       BIC              r2, r1      ;
+   32 00000018 6002            STR              r2, [r0]    ;
+   33 0000001A 4770            BX               lr          ;
+   34 0000001C                 ENDP
+   35 0000001C         
+   36 0000001C                 END                          ;
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=lab02_joystick_and_leds_with_cubemx\asm.d -olab02_joystick_and_
+leds_with_cubemx\asm.o -I.\RTE\_lab02_joystick_and_leds_with_cubemx -IC:\Keil_v
+5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32L
+4xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include --predefine="__EVAL SET
+A 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 526" -
+-predefine="_RTE_ SETA 1" --predefine="STM32L476xx SETA 1" --list=asm.lst asm.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+asm 00000000
+
+Symbol: asm
+   Definitions
+      At line 1 in file asm.s
+   Uses
+      None
+Comment: asm unused
+clear_a_bit_of_a_port 00000012
+
+Symbol: clear_a_bit_of_a_port
+   Definitions
+      At line 29 in file asm.s
+   Uses
+      At line 4 in file asm.s
+Comment: clear_a_bit_of_a_port used once
+read_a_bit_of_a_port 00000000
+
+Symbol: read_a_bit_of_a_port
+   Definitions
+      At line 10 in file asm.s
+   Uses
+      At line 2 in file asm.s
+Comment: read_a_bit_of_a_port used once
+set_a_bit_of_a_port 00000008
+
+Symbol: set_a_bit_of_a_port
+   Definitions
+      At line 21 in file asm.s
+   Uses
+      At line 3 in file asm.s
+Comment: set_a_bit_of_a_port used once
+4 symbols
+340 symbols in table
